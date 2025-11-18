@@ -95,7 +95,15 @@ SESSION_CONFIGS = [
     dict(
         name="competition",
         app_sequence=["ringsupplychain_comp"],
-        display_name="Comp Demo",
+        display_name="Comp. double ring, Demo",
+        num_demo_participants=4,
+        **GAME_CONFIG,
+        **COMP_DEMO
+    ),
+    dict(
+        name="competition_middleman",
+        app_sequence=["ring_comp_middleman"],
+        display_name="Comp. jump middleman, Demo",
         num_demo_participants=4,
         **GAME_CONFIG,
         **COMP_DEMO
