@@ -15,6 +15,7 @@
             margin-left: 5px;
             margin-right: 5px;
             padding-top: 1rem;
+            border-radius: 4px;
         }
     </style>
 {{ endblock }}
@@ -163,12 +164,13 @@
     }, supplyIncreaseInterval);
 
     function get_item_from_predecessor(units) {
+        if (botInventory + mydata.inventory >= js_vars.maximum_units)
+            return false;
         if (supply > 0 && units <= supply) {
             supply -= units;
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     // setup next button
