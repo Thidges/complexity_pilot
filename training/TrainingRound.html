@@ -158,14 +158,12 @@
 
     // every second, supply increases by 1 until it reaches 3
     window.setInterval(function() {
-        if (supply < maxSupply) {
+        if (supply < maxSupply && supply + botInventory + mydata.inventory < js_vars.maximum_units) {
             supply += supplyIncreaseAmount;
         }
     }, supplyIncreaseInterval);
 
     function get_item_from_predecessor(units) {
-        if (botInventory + mydata.inventory >= js_vars.maximum_units)
-            return false;
         if (supply > 0 && units <= supply) {
             supply -= units;
             return true;
