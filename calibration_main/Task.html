@@ -1,5 +1,5 @@
 {{ block title }}
-    Training Round
+    Task
 {{ endblock }}
 
 {{ block styles }}
@@ -101,7 +101,11 @@
         </div>
     {{ endif }}
 
-    {{ formfields }}
+    Rev:<input type="text" id="id_total_revenue" name="total_revenue" value=""><br>
+    Req:<input type="text" id="id_total_request_cost" name="total_request_cost" value=""><br>
+    Inv:<input type="text" id="id_total_inventory_cost" name="total_inventory_cost" value="">
+    Items:<input type="text" id="id_total_items_sold" name="total_items_sold" value="">
+
     {{ next_button }}
 {{ endblock }}
 
@@ -142,6 +146,11 @@
     const oTreeTimer = document.getElementsByClassName('otree-timer')[0];
     const startTimer = document.getElementsByClassName('start-timer')[0];
     const nextButton = document.getElementsByClassName("otree-btn-next")[0];
+    
+    const totalRevenueInput = document.getElementById("id_total_revenue");
+    const totalRequestCostInput = document.getElementById("id_total_request_cost");
+    const totalInventoryCostInput = document.getElementById("id_total_inventory_cost");
+    const totalItemsSoldInput = document.getElementById("id_total_items_sold");
 
     const initialSupply = 2;
     const maxSupply = 3;

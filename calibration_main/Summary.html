@@ -1,0 +1,21 @@
+{{ block title }}
+    Summary
+{{ endblock }}
+
+{{ block content }}
+    <p>
+        You started with {{ subsession.initial_cash }} ECU,<br>
+        delivered {{ player.total_items_sold }} items to your successor, earning a total of {{ player.total_revenue }},<br>
+        paid {{ player.total_request_cost }} for requests, and <br>
+        paid {{ player.total_inventory_cost }} for your inventory.
+    </p>
+    
+    <p>Your total earnings are {{ player.ecu_earnings }}.</p>
+
+{{ endblock }}
+
+{{ block scripts }}
+    <script>
+
+    </script>
+{{ endblock }}

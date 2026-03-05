@@ -59,9 +59,9 @@ SESSION_CONFIGS = [
         **TRAINING_CONFIG
     ),
     dict(
-        name="training",
-        display_name="Training Round",
-        app_sequence=["training"],
+        name="calibration_main",
+        display_name="Main Task",
+        app_sequence=["calibration_main"],
         num_demo_participants=1,
         players_per_group=1,
         **TRAINING_CONFIG

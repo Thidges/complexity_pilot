@@ -10,9 +10,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'training'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
-    
-    ADVANCE_PAGES = ['TrainingFeedback']
-    
+        
 
 class Subsession(BaseSubsession):
     players_per_group = models.IntegerField()
@@ -42,10 +40,15 @@ class Player(BasePlayer):
 
     last_inventory_update = models.FloatField()
 
+    total_inventory_cost = models.CurrencyField(initial=0)
+    total_request_cost = models.CurrencyField(initial=0)
     total_cost = models.CurrencyField(initial=0)
     total_revenue = models.CurrencyField(initial=0)
     total_profit = models.CurrencyField(initial=0)
     total_items_sold = models.IntegerField(initial=0)
+    ecu_earnings = models.CurrencyField(initial=0)
+    
+    refreshed_page = models.BooleanField(initial=False)
 
 
 # FUNCTIONS
@@ -97,44 +100,15 @@ def creating_session(subsession):
         player.inventory = initial_stock
         player.balance = initial_cash
 
-    add_pages_to_session_vars(subsession, C.ADVANCE_PAGES)
-
 
 # FUNCTIONS
-def ensure_page_completed(player: Player, current_page_name=None):
-    participant = player.participant
-    if current_page_name is None:
-        current_page_name = participant._current_page_name
-
-    if 'pages_completed' not in participant.vars:
-        participant.vars['pages_completed'] = []
-
-    if current_page_name not in participant.pages_completed:
-        participant.pages_completed.append(current_page_name)
-
-
-def live_page_advance_check(player, data):
-    current_page_name = player.participant._current_page_name
-    ensure_page_completed(player, current_page_name)
-
-    if player.session.advance_pages.get(current_page_name, False):
-        return {0: {'advance': current_page_name}}
-    return None
-
-
-def add_pages_to_session_vars(subsession, add_pages):
-    session_advance_pages = subsession.session.vars.get("advance_pages", dict())
-    for page in add_pages:
-        if page not in session_advance_pages:
-            session_advance_pages[page] = False
-
-    subsession.session.advance_pages = session_advance_pages
-
 def common_vars_for_template(player):
     subs = player.subsession
     return {
         'balance': player.balance,
         'inventory': int(player.inventory),
+        'total_request_cost': player.total_request_cost,
+        'total_inventory_cost': player.total_inventory_cost,
         'total_cost': player.total_cost,
         'total_revenue': player.total_revenue,
         'total_profit': player.total_profit,
@@ -150,7 +124,24 @@ def common_vars_for_template(player):
 
 
 # PAGES
-class TrainingRound(Page):
+class Preface(Page):
+    @staticmethod
+    def js_vars(player):
+        return {
+            "player_id": player.id_in_group,
+            "current_page_name": player.participant._current_page_name
+        }
+    
+    
+class Task(Page):
+    form_model = 'player'
+    form_fields = [
+        'total_revenue',
+        'total_request_cost',
+        'total_inventory_cost',
+        'total_items_sold'
+    ]
+    
     def get_timeout_seconds(player):
         return player.subsession.total_seconds
 
@@ -169,28 +160,21 @@ class TrainingRound(Page):
 
     @staticmethod
     def vars_for_template(player):
+        if not player.refreshed_page:
+            player.refreshed_page = True
+            
         return {
             **common_vars_for_template(player),
         }
     
-class TrainingFeedback(Page):
-    @staticmethod
-    def live_method(player, data):
-        return live_page_advance_check(player, data)
-
-    @staticmethod
-    def js_vars(player):
-        return {
-            "player_id": player.id_in_group,
-            "current_page_name": player.participant._current_page_name
-        }
-
-    @staticmethod
     def before_next_page(player, timeout_happened):
-        ensure_page_completed(player)
-
+        player.ecu_earnings = player.subsession.initial_cash + player.total_revenue - player.total_inventory_cost - player.total_request_cost
+    
+class Summary(Page):
+    pass
 
 page_sequence = [
-    TrainingRound, 
-    TrainingFeedback
+    Preface,
+    Task,
+    Summary
 ]

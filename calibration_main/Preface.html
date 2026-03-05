@@ -1,0 +1,24 @@
+{{ block title }}
+    Preface
+{{ endblock }}
+
+{{ block content }}
+    
+    <p>
+        Your starting balance is {{ player.balance }}.<br>
+        Your starting inventory is {{ player.inventory }} units.
+    </p>
+
+    <p>
+        Your choices in this task affect your payment!
+    </p>
+   
+    {{ next_button }}
+{{ endblock }}
+
+{{ block scripts }}
+    <script>
+        const nextButton = document.getElementsByClassName('otree-btn-next')[0];
+        nextButton.innerText = "Start Task";
+    </script>
+{{ endblock }}
