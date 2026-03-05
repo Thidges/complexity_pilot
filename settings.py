@@ -73,6 +73,15 @@ SESSION_CONFIGS = [
         num_demo_participants=1,
         **GAME_CONFIG,
     ),
+    dict(
+        name="calibration_complete",
+        display_name="Intro + Main Task + Final Questionnaire + Payments",
+        app_sequence=["calibration_intro", "calibration_main", "calibration_questionnaires"],
+        num_demo_participants=1,
+        players_per_group=1,
+        **TRAINING_CONFIG,
+        **GAME_CONFIG,
+    ),
 ]
 
 # Rooms
