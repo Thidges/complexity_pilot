@@ -101,10 +101,10 @@
         </div>
     {{ endif }}
 
-    Rev:<input type="text" id="id_total_revenue" name="total_revenue" value=""><br>
-    Req:<input type="text" id="id_total_request_cost" name="total_request_cost" value=""><br>
-    Inv:<input type="text" id="id_total_inventory_cost" name="total_inventory_cost" value="">
-    Items:<input type="text" id="id_total_items_sold" name="total_items_sold" value="">
+    <input type="hidden" id="id_total_revenue" name="total_revenue" value=""><br>
+    <input type="hidden" id="id_total_request_cost" name="total_request_cost" value=""><br>
+    <input type="hidden" id="id_total_inventory_cost" name="total_inventory_cost" value="">
+    <input type="hidden" id="id_total_items_sold" name="total_items_sold" value="">
 
     {{ next_button }}
 {{ endblock }}
@@ -221,6 +221,8 @@
         "inventory": js_vars.inventory,
         "balance": js_vars.balance,
         "total_cost": js_vars.total_cost,
+        "total_request_cost": js_vars.total_request_cost,
+        "total_inventory_cost": js_vars.total_inventory_cost,
         "total_revenue": js_vars.total_revenue,
         "total_profit": js_vars.total_profit,
         "total_items_sold": js_vars.total_items_sold,
@@ -252,6 +254,7 @@
     function update_receiver_data(transferred, units) {
         mydata.balance -= js_vars.inventory_click_price;
         mydata.total_cost += js_vars.inventory_click_price;
+        mydata.total_request_cost += js_vars.inventory_click_price;
         if (transferred) {
             mydata.inventory += units;
         }
@@ -271,6 +274,7 @@
         return false;
     }
 
+    // updates the display, but also writes the data to hidden inputs for oTree to submit at the end of the round
     function update_display() {
         inventoryDisplay.innerHTML = mydata.inventory + " units";
         balanceDisplay.innerHTML = mydata.balance.toFixed(0) + " ECU";
@@ -278,6 +282,12 @@
         totalRevenueDisplay.innerHTML = mydata.total_revenue.toFixed(0) + " ECU";
         totalItemsSold.innerHTML = mydata.total_items_sold + " units";
         // totalProfitDisplay.innerHTML = mydata.total_profit.toFixed(0) + " ECU";
+        
+        // set hidden inputs
+        totalRevenueInput.value = mydata.total_revenue.toFixed(0);
+        totalRequestCostInput.value = mydata.total_request_cost.toFixed(0);
+        totalInventoryCostInput.value = mydata.total_inventory_cost.toFixed(0);
+        totalItemsSoldInput.value = mydata.total_items_sold;
     }
 
     function live_update_status(data) {
@@ -336,6 +346,7 @@
         let cost = mydata.inventory * js_vars.inventory_unit_cost_per_second;
         mydata.balance -= cost;
         mydata.total_cost += cost;
+        mydata.total_inventory_cost += cost;
         mydata.total_profit = mydata.total_revenue - mydata.total_cost;
     }
 
