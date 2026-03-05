@@ -67,11 +67,11 @@ SESSION_CONFIGS = [
         **TRAINING_CONFIG
     ),
     dict(
-        name="questionnaire",
+        name="calibration_questionnaires",
         display_name="Final Questionnaire + Payments",
-        app_sequence=["questionnaires"],
+        app_sequence=["calibration_questionnaires"],
         num_demo_participants=1,
-        **GAME_CONFIG
+        **GAME_CONFIG,
     ),
 ]
 
@@ -98,7 +98,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=0.0005, participation_fee=5.00, doc=""
 )
 
-PARTICIPANT_FIELDS = ['game_rounds', 'pages_completed', 'finished']
+PARTICIPANT_FIELDS = ['game_rounds', 'pages_completed', 'finished', 'ecu_earnings']
 SESSION_FIELDS = ['advance_pages']
 
 # ISO-639 code

@@ -1,0 +1,25 @@
+{{ block title }}
+    Final Screen
+{{ endblock }}
+
+
+{{ block content }}
+
+    <p>
+        You earned {{ ecu_earnings }} in the task. This corresponds to {{ usd_earnings|to2 }} USD.<br>
+        In addition, you receive a completion fee of {{ participation_fee }}.
+    </p>
+
+    <p>
+        Your total payment is {{ final_payment|to2 }} USD.
+    </p>
+
+    {{ if prolific_url }}
+        <a class="btn btn-primary" href="{{ prolific_url }}" role="button">Complete study and return to Prolific</a>
+        <p><em>Note: There is no need to enter a completion code.</em></p>
+    {{ else }}
+        {{ next_button }}
+    {{ endif }}
+
+
+{{ endblock }}
