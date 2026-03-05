@@ -23,25 +23,13 @@ TRAINING_CONFIG = dict(
     training_info_highlight_timeout_seconds=1,
 )
 
-COMPETITION_TRAINING_CONFIG = dict(
-    training_cost_per_second=5,
-    training_price_per_unit=100,
-    training_initial_stock=2,
-    training_initial_cash=300,
-    training_round_seconds=900,
-    training_transfer_probability=0.5,
-    training_start_delay_seconds=2,
-    training_leave_seconds=1,
-    training_request_timeout_seconds=0,
-    training_info_highlight_timeout_seconds=1,
-)
-
 S_10_T = dict(
     treatment="S_10_T",
     players_per_group=5,
     initial_stock="2, 2, 2, 2, 2",
     initial_cash="300, 300, 300, 300, 300",
     cost_per_second="5",
+    cost_per_request="2",
     price_per_unit="100",
     show_chain="True"
 )
@@ -59,9 +47,9 @@ COMP_DEMO = dict(
 
 SESSION_CONFIGS = [
     dict(
-        name="intro",
+        name="calibration_intro",
         display_name="Introduction",
-        app_sequence=["intro"],
+        app_sequence=["calibration_intro"],
         num_demo_participants=1,
         players_per_group=5,
         initial_cash="30, 30, 30, 30, 30",
@@ -79,58 +67,12 @@ SESSION_CONFIGS = [
         **TRAINING_CONFIG
     ),
     dict(
-        name="competition_training",
-        display_name="Competition Training Round",
-        app_sequence=["competition_training"],
-        num_demo_participants=1,
-        players_per_group=1,
-        **COMPETITION_TRAINING_CONFIG
-    ),
-    dict(
-        name="S_10_T_demo",
-        app_sequence=["ringsupplychain"],
-        display_name="S_10_T Demo",
-        num_demo_participants=5,
-        **GAME_CONFIG,
-        **S_10_T
-    ),
-    dict(
-        name="competition",
-        app_sequence=["ringsupplychain_comp"],
-        display_name="Comp. double ring, Demo",
-        num_demo_participants=4,
-        **GAME_CONFIG,
-        **COMP_DEMO
-    ),
-    dict(
-        name="competition_middleman",
-        app_sequence=["ring_comp_middleman"],
-        display_name="Comp. jump middleman, Demo",
-        num_demo_participants=4,
-        **GAME_CONFIG,
-        **COMP_DEMO
-    ),
-    dict(
         name="questionnaire",
         display_name="Final Questionnaire + Payments",
         app_sequence=["questionnaires"],
         num_demo_participants=1,
         **GAME_CONFIG
     ),
-    dict(
-        name="full_experiment",
-        display_name="Full Experiment",
-        app_sequence=[
-            "intro",
-            "competition_training",
-            "ring_comp_middleman",
-            "questionnaires"
-        ],
-        num_demo_participants=4,
-        **COMPETITION_TRAINING_CONFIG,
-        **GAME_CONFIG,
-        **COMP_DEMO
-    )
 ]
 
 # Rooms

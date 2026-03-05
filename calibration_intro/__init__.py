@@ -53,21 +53,8 @@ def consent_given_error_message(player, value):
     return None
 
 # PAGES
-
-# Not currently used, but can be used to show a demo of the supply chain figure
-class FigureDemo(Page):
-    def js_vars(player):
-        return {
-            "own_id_in_group": player.id_in_group,
-        }
     
-class Welcome(Page):
-    def vars_for_template(player):
-        return {
-            'participation_fee': player.session.config.get('participation_fee', '0.00 EUR')
-        }
-    
-class ConsentRadboud(Page):
+class Consent(Page):
     form_model = 'player'
     form_fields = [
         'confirm_read_understood',
@@ -76,8 +63,7 @@ class ConsentRadboud(Page):
         'data_anonymity',
         'data_publication',
         'future_research_use',
-        'agree_to_participate',
-        'confirm_info_reviewed_again',
+        'agree_to_participate'
     ]
     
     def error_message(self, values):
@@ -89,7 +75,6 @@ class ConsentRadboud(Page):
             'data_publication',
             'future_research_use',
             'agree_to_participate',
-            'confirm_info_reviewed_again'
         ]
         unchecked = [field for field in required_checks if not values.get(field)]
         if unchecked:
@@ -119,9 +104,10 @@ class GameInstructions(Page):
 
         ecu_earn = sess.config.get('price_per_unit', "10").split(';')[0]
         ecu_inventory_cost = sess.config.get('cost_per_second', "5").split(';')[0]
+        ecu_request_cost = sess.config.get('cost_per_request', "2").split(';')[0]
         
         return {
-            'exchange_rate': f"100 ECU = {hundred_ecu:.2f} €",
+            'exchange_rate': f"100 ECU = {hundred_ecu:.2f} USD",
             'num_participants': players_per_group if show_chain else "several",
             'show_chain': show_chain,
             'DEBUG': DEBUG,
@@ -129,6 +115,7 @@ class GameInstructions(Page):
             'ecu_endowment': initial_cash ,
             'ecu_earn': ecu_earn,
             'ecu_inventory_cost': ecu_inventory_cost,
+            'ecu_request_cost': ecu_request_cost,
             'round_seconds': sess.config.get('round_seconds', 30),
             'num_rounds': sess.config.get('num_rounds', 1),
             'training_round_seconds': sess.config.get('training_round_seconds', 30),
@@ -148,8 +135,6 @@ class GameInstructions(Page):
         }
 
 page_sequence = [
-    # FigureDemo, 
-    Welcome,
-    ConsentRadboud, 
+    Consent, 
     GameInstructions
 ]

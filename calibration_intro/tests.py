@@ -3,8 +3,7 @@ from . import *
 
 class PlayerBot(Bot):
     def play_round(self):
-        yield Welcome
-        yield ConsentRadboud, {
+        yield Consent, {
             'confirm_read_understood': True,
             'voluntary_participation': True,
             'data_access_by_authorities': True,
@@ -12,6 +11,5 @@ class PlayerBot(Bot):
             'data_publication': True,
             'future_research_use': True,
             'agree_to_participate': True,
-            'confirm_info_reviewed_again': True
         }
         yield GameInstructions

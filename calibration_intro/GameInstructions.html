@@ -1,0 +1,54 @@
+{{ block title }}
+    Instructions of the Game
+{{ endblock }}
+
+{{ block content }}
+    <p>
+        <b>Preface:</b> All monetary amounts in this study are shown in Experimental Currency Units (ECU), which will be converted to USD at the end of the study with an exchange rate of {{ exchange_rate }}.
+    </p>
+
+    <p>
+        <b>Environment:</b> The main task of this study involves a closed ring system, meaning you have a <em>predecessor</em> and a <em>successor</em>.
+    </p>
+
+    <div class="text-center mb-3">
+        <img src="{{ static 'intro/embedding_old.png' }}" alt="embedding" style="width: 80%;">
+    </div>
+
+    <p>
+        <b>Situation:</b> Everyone has their own inventory that can store units of a virtual good. At any time, you can request one unit of a virtual good from your predecessor. You receive a unit only if your predecessor has one in their inventory. Similarly, your successor can, at any time, request a unit from you. 
+    </p>
+
+    <p>
+        <b>Inventory:</b> The inventory can be zero or positive. Every time you receive a unit from your predecessor, your inventory increases by one. Every time your successor receives a unit from you, your inventory decreases by one. 
+    </p>
+    
+    <p>
+        <b>Your Actions:</b> To request a unit, click REQUEST in the left box. The box turns blue for a second when your predecessor’s inventory has a unit and you receive it; otherwise, it turns orange.
+    </p>
+
+    <p>
+        <b>Your Successor's actions:</b> When your successor requests a unit, the right box turns blue for a second when your inventory has a unit, and your successor receives it; otherwise, it turns orange. 
+    </p>
+
+    <p><b>Costs and Benefits:</b></p>
+    <ul>
+        <li>You start with {{ ecu_endowment }} ECUs.</li> 
+        <li>You earn {{ ecu_earn }} ECUs every time your successor receives a unit from you.</li>
+        <li>You must pay {{ ecu_inventory_cost }} ECU every second for each unit in your inventory, i.e., holding inventory is costly.</li>
+        <li>You must pay {{ ecu_request_cost }} for every request you make to your predecessor, irrespective of whether it results in you receiving a unit or not.</li>
+        <li>Your ECU balance adjusts accordingly. Technically, it can go negative, but you can also recover.</li>
+    </ul>
+
+    <p>
+        <b>Duration:</b> The task ends after {{ round_seconds }} seconds. 
+    </p>
+
+    <p>
+        Please answer the following questions before continuing:
+    </p>
+
+    {{ next_button }}
+
+{{ endblock }}
+
