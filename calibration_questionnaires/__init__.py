@@ -44,7 +44,7 @@ class FinalScreen(Page):
         sess = player.session
         pppf = player.participant.payoff_plus_participation_fee()
         ecu_earnings = player.participant.vars.get('ecu_earnings', 0)
-        usd_earnings = pppf * sess.config['real_world_currency_per_point']
+        usd_earnings = int(ecu_earnings) * sess.config['real_world_currency_per_point']
         
         return {
             'participation_fee': sess.config['participation_fee'],

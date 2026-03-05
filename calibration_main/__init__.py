@@ -169,6 +169,7 @@ class Task(Page):
     
     def before_next_page(player, timeout_happened):
         player.ecu_earnings = player.subsession.initial_cash + player.total_revenue - player.total_inventory_cost - player.total_request_cost
+        player.participant.ecu_earnings = player.ecu_earnings
     
 class Summary(Page):
     pass
