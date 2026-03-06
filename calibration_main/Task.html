@@ -106,7 +106,9 @@
     <input type="hidden" id="id_total_inventory_cost" name="total_inventory_cost" value="">
     <input type="hidden" id="id_total_items_sold" name="total_items_sold" value="">
 
-    {{ next_button }}
+    {{ if DEBUG }}
+        {{ next_button }}
+    {{ endif }}
 {{ endblock }}
 
 
@@ -181,15 +183,14 @@
     }
 
     // setup next button
-    nextButton.style.display = "none";
     nextButton.classList.remove("btn-primary");
     nextButton.classList.add("btn-danger");
-    nextButton.innerText = "Leave the training round";
     requestButton.disabled = true;
 
-    window.setTimeout(function() {
-        nextButton.style.display = "block";
-    }, (js_vars.training_start_delay_seconds + js_vars.allow_training_leave_seconds) * 1000);
+    // should not allow people to leave in the calibration game
+    // window.setTimeout(function() {
+    //     nextButton.style.display = "block";
+    // }, (js_vars.training_start_delay_seconds + js_vars.allow_training_leave_seconds) * 1000);
 
     // setup timers
     let currentDate = new Date();

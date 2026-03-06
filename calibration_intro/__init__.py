@@ -1,8 +1,6 @@
 from otree.api import *
 from datetime import datetime
 from otree.settings import DEBUG
-import os
-import json
 
 doc = """
 Your app description
@@ -44,9 +42,6 @@ class Player(BasePlayer):
 
 
 # FUNCTIONS
-
-
-
 def consent_given_error_message(player, value):
     if not value:
         return "You must agree to participate in the experiment. If you do not agree, please contact the experimenter."
@@ -98,13 +93,11 @@ class GameInstructions(Page):
         half = players_per_group // 2
         middle_pos = half if players_per_group % 2 == 0 else half + 1
         
-        initial_cash_rounds = sess.config.get('initial_cash', None)
-        initial_cash_rounds = [[int(x.strip()) for x in blocks.split(',')] for blocks in initial_cash_rounds.split(';')] if initial_cash_rounds else [[0]]
-        initial_cash = initial_cash_rounds[0][0]
+        initial_cash = sess.config.get('initial_cash', None)
 
-        ecu_earn = sess.config.get('price_per_unit', "10").split(';')[0]
-        ecu_inventory_cost = sess.config.get('cost_per_second', "5").split(';')[0]
-        ecu_request_cost = sess.config.get('cost_per_request', "2").split(';')[0]
+        ecu_earn = sess.config.get('price_per_unit', 10)
+        ecu_inventory_cost = sess.config.get('cost_per_second', 5)
+        ecu_request_cost = sess.config.get('cost_per_request', 2)
         
         return {
             'exchange_rate': f"100 ECU = {hundred_ecu:.2f} USD",
@@ -117,8 +110,6 @@ class GameInstructions(Page):
             'ecu_inventory_cost': ecu_inventory_cost,
             'ecu_request_cost': ecu_request_cost,
             'round_seconds': sess.config.get('round_seconds', 30),
-            'num_rounds': sess.config.get('num_rounds', 1),
-            'training_round_seconds': sess.config.get('training_round_seconds', 30),
         }
     
     

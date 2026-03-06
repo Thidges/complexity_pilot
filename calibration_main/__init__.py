@@ -1,5 +1,5 @@
 from otree.api import *
-from settings import BASE_URL
+from otree.settings import DEBUG
 
 doc = """
 Your app description
@@ -55,20 +55,20 @@ class Player(BasePlayer):
 def creating_session(subsession):
     sess = subsession.session
     players_per_group = sess.config.get('players_per_group', None)
-    initial_stock = sess.config.get('training_initial_stock', None)
-    initial_cash = sess.config.get('training_initial_cash', None)
-    cost_per_second = sess.config.get('training_cost_per_second', None)
-    price_per_unit = sess.config.get('training_price_per_unit', None)
-    price_per_click = sess.config.get('training_price_per_click', None)
-    maximum_units = sess.config.get('training_maximum_units_in_play', None)
-    show_chain = sess.config.get('training_show_chain', False)
+    initial_stock = sess.config.get('initial_stock', None)
+    initial_cash = sess.config.get('initial_cash', None)
+    cost_per_second = sess.config.get('cost_per_second', None)
+    price_per_unit = sess.config.get('price_per_unit', None)
+    price_per_click = sess.config.get('price_per_click', None)
+    maximum_units = sess.config.get('maximum_units_in_play', None)
+    show_chain = sess.config.get('show_chain', False)
     transfer_probability = sess.config.get('training_transfer_probability', None)
     
-    start_delay_seconds = sess.config.get('training_start_delay_seconds', None)
-    leave_seconds = sess.config.get('training_leave_seconds', None)
-    round_seconds = sess.config.get('training_round_seconds', None)
-    request_timeout_seconds = sess.config.get('training_request_timeout_seconds', None)
-    info_highlight_timeout_seconds = sess.config.get('training_info_highlight_timeout_seconds', None)
+    start_delay_seconds = sess.config.get('start_delay_seconds', None)
+    leave_seconds = sess.config.get('leave_seconds', None)
+    round_seconds = sess.config.get('round_seconds', None)
+    request_timeout_seconds = sess.config.get('request_timeout_seconds', None)
+    info_highlight_timeout_seconds = sess.config.get('info_highlight_timeout_seconds', None)
     total_seconds = start_delay_seconds + round_seconds
 
     if any(var is None for var in
@@ -120,6 +120,7 @@ def common_vars_for_template(player):
         'training_seconds': subs.round_seconds,
         'allow_training_leave_seconds': subs.leave_seconds,
         'transfer_probability': subs.transfer_probability,
+        'DEBUG': DEBUG
     }
 
 
