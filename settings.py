@@ -17,28 +17,28 @@ GAME_CONFIG = dict(
 )
 
 SESSION_CONFIGS = [
-    dict(
-        name="calibration_intro",
-        display_name="Introduction",
-        app_sequence=["calibration_intro"],
-        num_demo_participants=1,
-        **GAME_CONFIG
-    ),
-    dict(
-        name="calibration_main",
-        display_name="Main Task",
-        app_sequence=["calibration_main"],
-        num_demo_participants=1,
-        price_per_click=1,
-        **GAME_CONFIG,
-    ),
-    dict(
-        name="calibration_questionnaires",
-        display_name="Final Questionnaire / Payments",
-        app_sequence=["calibration_questionnaires"],
-        num_demo_participants=1,
-        **GAME_CONFIG
-    ),
+    # dict(
+    #     name="calibration_intro",
+    #     display_name="Introduction",
+    #     app_sequence=["calibration_intro"],
+    #     num_demo_participants=1,
+    #     **GAME_CONFIG
+    # ),
+    # dict(
+    #     name="calibration_main",
+    #     display_name="Main Task",
+    #     app_sequence=["calibration_main"],
+    #     num_demo_participants=1,
+    #     price_per_click=1,
+    #     **GAME_CONFIG,
+    # ),
+    # dict(
+    #     name="calibration_questionnaires",
+    #     display_name="Final Questionnaire / Payments",
+    #     app_sequence=["calibration_questionnaires"],
+    #     num_demo_participants=1,
+    #     **GAME_CONFIG
+    # ),
     dict(
         name="req00",
         display_name="Setting 1: Request Cost 0",
