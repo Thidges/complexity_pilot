@@ -125,6 +125,7 @@ def common_vars_for_template(player):
         'training_start_delay_seconds': subs.start_delay_seconds,
         'training_seconds': subs.round_seconds,
         'allow_training_leave_seconds': subs.leave_seconds,
+        'inventory_click_price': subs.cost_per_click,
         'DEBUG': DEBUG
     }
 
@@ -159,7 +160,6 @@ class Task(Page):
             'request_button_timeout_seconds': subs.request_timeout_seconds,
             'inventory_unit_cost_per_second': subs.cost_per_second,
             'inventory_unit_price': subs.price_per_unit,
-            'inventory_click_price': subs.cost_per_click,
             'maximum_units': subs.maximum_units,
             **common_vars_for_template(player),
         }
