@@ -98,8 +98,16 @@ def creating_session(subsession):
         player.inventory = initial_stock
         player.balance = initial_cash
 
+# custom export of bonus payments for prolific.
+def custom_export_prolific(players):
+    sess = players[0].session
+    for p in players:
+        part = p.participant
+        if part.vars.get("finished", False) and part.label:
+            bonus_payment = round(int(part.payoff) * sess.config['real_world_currency_per_point'], 2)
+            if bonus_payment > 0:
+                yield [part.label, bonus_payment]
 
-# FUNCTIONS
 def common_vars_for_template(player):
     subs = player.subsession
     return {

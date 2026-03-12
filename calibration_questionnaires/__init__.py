@@ -38,6 +38,7 @@ class Questionnaire(Page):
     form_fields = ['strategy_text', 'comments']
     
     def before_next_page(player, timeout_happened):
+        player.participant.finished = True
         participant_ecu_earnings = player.participant.vars.get('ecu_earnings', 0)
         if participant_ecu_earnings > 0:
             player.payoff = participant_ecu_earnings
@@ -57,10 +58,8 @@ class FinalScreen(Page):
             'final_payment': pppf,
             'ecu_earnings': ecu_earnings,
             'usd_earnings': usd_earnings,
-            'prolific_url': sess.config.get('prolific_completion_url', '')
+            'prolific_url': sess.config.get('prolific_completion_url', ''),
+            "finished": player.participant.finished
         }
-    
-    def before_next_page(player, timeout_happened):
-        player.participant.finished = True
 
 page_sequence = [Questionnaire, FinalScreen]
