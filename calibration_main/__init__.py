@@ -62,8 +62,7 @@ def creating_session(subsession):
     price_per_click = sess.config.get('price_per_click', None)
     maximum_units = sess.config.get('maximum_units_in_play', None)
     show_chain = sess.config.get('show_chain', False)
-    transfer_probability = sess.config.get('training_transfer_probability', None)
-    
+
     start_delay_seconds = sess.config.get('start_delay_seconds', None)
     leave_seconds = sess.config.get('leave_seconds', None)
     round_seconds = sess.config.get('round_seconds', None)
@@ -73,7 +72,7 @@ def creating_session(subsession):
 
     if any(var is None for var in
            [players_per_group, initial_stock, initial_cash, cost_per_second, price_per_unit, price_per_click, maximum_units,
-            show_chain, transfer_probability, start_delay_seconds, leave_seconds, round_seconds, request_timeout_seconds,info_highlight_timeout_seconds]):
+            show_chain, start_delay_seconds, leave_seconds, round_seconds, request_timeout_seconds,info_highlight_timeout_seconds]):
         raise ValueError("session not configured correctly")
 
     subsession.players_per_group = players_per_group
@@ -84,7 +83,6 @@ def creating_session(subsession):
     subsession.price_per_click = price_per_click
     subsession.maximum_units = maximum_units
     subsession.show_chain = show_chain
-    subsession.transfer_probability = transfer_probability
 
     subsession.round_seconds = round_seconds
     subsession.start_delay_seconds = start_delay_seconds
@@ -119,7 +117,6 @@ def common_vars_for_template(player):
         'training_start_delay_seconds': subs.start_delay_seconds,
         'training_seconds': subs.round_seconds,
         'allow_training_leave_seconds': subs.leave_seconds,
-        'transfer_probability': subs.transfer_probability,
         'DEBUG': DEBUG
     }
 

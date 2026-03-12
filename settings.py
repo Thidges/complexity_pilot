@@ -9,7 +9,6 @@ GAME_CONFIG = dict(
     price_per_unit=100,
     initial_stock=2,
     initial_cash=300,
-    price_per_click=1,
     maximum_units_in_play=10, # should be 5 * training_initial_stock
     start_delay_seconds=1,
     leave_seconds=15,
@@ -30,7 +29,8 @@ SESSION_CONFIGS = [
         display_name="Main Task",
         app_sequence=["calibration_main"],
         num_demo_participants=1,
-        **GAME_CONFIG
+        price_per_click=1,
+        **GAME_CONFIG,
     ),
     dict(
         name="calibration_questionnaires",
@@ -40,10 +40,35 @@ SESSION_CONFIGS = [
         **GAME_CONFIG
     ),
     dict(
-        name="calibration_complete",
-        display_name="Intro + Main Task + Final Questionnaire / Payments",
+        name="req00",
+        display_name="Setting 1: Request Cost 0",
         app_sequence=["calibration_intro", "calibration_main", "calibration_questionnaires"],
         num_demo_participants=1,
+        price_per_click=0,
+        **GAME_CONFIG
+    ),
+    dict(
+        name="req01",
+        display_name="Setting 2: Request Cost 1",
+        app_sequence=["calibration_intro", "calibration_main", "calibration_questionnaires"],
+        num_demo_participants=1,
+        price_per_click=1,
+        **GAME_CONFIG
+    ),
+dict(
+        name="req25",
+        display_name="Setting 3: Request Cost 25",
+        app_sequence=["calibration_intro", "calibration_main", "calibration_questionnaires"],
+        num_demo_participants=1,
+        price_per_click=25,
+        **GAME_CONFIG
+    ),
+    dict(
+        name="req50",
+        display_name="Setting 4: Request Cost 50",
+        app_sequence=["calibration_intro", "calibration_main", "calibration_questionnaires"],
+        num_demo_participants=1,
+        price_per_click=50,
         **GAME_CONFIG
     ),
 ]
