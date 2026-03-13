@@ -50,13 +50,16 @@ class FinalScreen(Page):
         sess = player.session
         pppf = player.participant.payoff_plus_participation_fee()
         ecu_earnings = player.participant.vars.get('ecu_earnings', 0)
-        rwc_earnings = round(int(ecu_earnings) * sess.config['real_world_currency_per_point'], 2)
-        
+        if ecu_earnings > 0:
+            rwc_earnings = round(int(ecu_earnings) * sess.config['real_world_currency_per_point'], 2)
+        else:
+            rwc_earnings = 0
+
         return {
             'participation_fee': sess.config['participation_fee'],
             'final_payment': pppf,
             'ecu_earnings': ecu_earnings,
-            'rwc_earnings': f"£{rwc_earnings}",
+            'rwc_earnings': f"£{rwc_earnings:.2f}",
             'prolific_url': sess.config.get('prolific_completion_url', ''),
             "finished": player.participant.finished
         }
